@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script  src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="saveAlertContainer" style="position: fixed;z-index: 1000; bottom: 2px;right: 2px;">
+    <div id="liveAlertPlaceholder" class="fade show" ></div>
+  </div>
+  <!-- modal login -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">password:</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="loginbtn">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal login end  -->
+ <!-- modal signup-->
+ <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" id="usernamereg">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">image:</label>
+            <input type="file" class="form-control" id="imagereg">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">name:</label>
+            <input type="text" class="form-control" id="namereg">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Email:</label>
+            <input type="email" class="form-control" id="emailreg">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">password:</label>
+            <input type="password" class="form-control" id="passwordreg">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="signupbtnModal">Sign up</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal signup end  -->
+  <!-- spinner -->
+  <div id="spinner" class="rounded">
+    <div class="lds-dual-ring" ></div>
+  </div>
+ <!-- modal creat post-->
+ <div class="modal fade" id="creatModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">creat new post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">discription:</label>
+            <input type="text" class="form-control" id="discription">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">image:</label>
+            <input type="file" class="form-control" id="imagecreat">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="creatbtn">post</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancle</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  modal creat post end  -->
+  <!-- navigation bar -->
+    <div class="container " >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-2">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="home.html">meanmoon</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profileanchor">Profile</a>
+                  </li>
+                </ul>
+
+                <div class="d-flex gap-2" >
+                    <button type="button" id="loginbtngreen" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >Login</button>
+                    <button type="button" id="signupbtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signupModal">sign up</button>
+                    <img id="profileimage" src="imgae/th.jpg" style="height: 40px; width: 40px;visibility: hidden;"   class="rounded-circle border border-3">
+                    <span id="profilename" style="visibility: hidden;"></span>
+                    <button type="button" id="logoutbtn" onclick="logout()" class="btn btn btn-danger" style="visibility: hidden;">Logout</button>
+                  </form>
+              </div>
+            </div>
+          </nav>
+    </div>   
+  <!-- navigation bar end -->
+
+   <div class="container col-7" style="height: 100vh;">
+    <!-- posts -->
+    <div id="posts">
+          <!-- post -->
+          <h1 class="mt-5 mb-2" id="username-head">
+            <!-- ${post.author.username} -->
+          </h1>
+          <div class="card  shadow" >
+                <div id="post">
+
+                </div>
+                <div class="comment-input" id="add-comment-div">
+                    <input  type="text" id="commentInput" placeholder="Add your comment . . ."  style=" width: 90%;height: 50px;">
+                    <button  onclick="addcomment()" style=" width: 8%;height: 50px;" class="btn btn-outline-success" >Add</button>
+                </div> 
+                <ul class="list-group" id="comments-list">
+                <!-- ${commentsSTR} -->
+                </ul>
+         </div>
+          <!-- post end-->
+    </div>
+    <!-- posts end -->
+
+    </div>  
+     <!--alert div  -->
+     <button id="plus" data-bs-toggle="modal" data-bs-target="#creatModal" type="button" class="btn  rounded-circle" style="position: fixed;right: 50px;bottom: 20px;" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-patch-plus" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
+          <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z"/>
+        </svg>
+      </button>
+
+</body>
+<script src="showalert.js"></script>
+<script src="logout.js"></script>
+<script>
+
+ 
+  
+  const url = window.location.href;
+  const startIndex = url.indexOf('?id=');
+  const idSubstring = url.substring(startIndex + 4);
+  const endIndex = idSubstring.search(/\D/);
+  const idNumber = parseInt(endIndex === -1 ? idSubstring : idSubstring.substring(0, endIndex));
+
+
+  getpost()
+  signedup()
+  function getpost(){
+ 
+    axios.get("http://tarmeezacademy.com/api/v1/posts/"+idNumber)
+    .then((postres)=>{
+      console.log(postres.data.data.comments)
+      let commentsSTR=""
+      let post=postres.data.data
+      let comments=post.comments.forEach((comment)=>{
+        let li=`<li class="list-group-item list-group-item-success"><h5>
+            <img src="${comment.author.profile_image}" style="height: 40px; width: 40px;" class="rounded-circle border border-3">
+            ${comment.author.username}</h5>${comment.body}</li>`
+        commentsSTR+=li
+      })
+      
+        let tags=""
+        post.tags.forEach(tag => {
+          tags+=`<span> ${tag.name}</span>`
+        });
+        let title=post.title;
+        if(title ==null)
+        {
+          title=""
+        }
+        document.getElementById("post").innerHTML=
+        `
+        <!-- post -->
+        
+              <h5 class="card-header">
+                <img src="${post.author.profile_image}" style="height: 40px; width: 40px;" class="rounded-circle border border-3">
+                <span>${post.author.username}</span>
+              </h5>
+              <div class="card-body "  >
+                <img src="${post.image}" style="width: 100%; height: 500px;">
+                <h6 style="color: rgb(193, 193, 193);">${post.created_at}</h6>
+                <h5>${title}</h5>
+                <p>${post.body}</p>
+                <hr>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                </svg>
+                <span>(${post.comments_count}) comments ${tags}</span>
+                </div>
+               
+          <!-- post end-->
+        `;
+        document.getElementById("username-head").innerHTML=post.author.username
+        document.getElementById("comments-list").innerHTML=commentsSTR
+
+         })
+  
+    }
+
+    
+  //  login 
+document.getElementById("loginbtn").addEventListener("click",()=>{
+  let username=document.getElementById('username').value
+  let password=document.getElementById('password').value
+  axios.post('https://tarmeezacademy.com/api/v1/login?username=yarob', {
+    "username" : username,
+    "password" : password
+})
+  .then(function (response) {
+    localStorage.setItem('token',response.data.token)
+    localStorage.setItem('user',JSON.stringify(response.data.user))
+
+    // console.log(JSON.parse(localStorage.getItem("user")).email)
+    
+    const modal=document.getElementById("exampleModal")
+    const modalinstance=bootstrap.Modal.getInstance(modal)
+    modalinstance.hide()
+    showalert("Login successfully!","success")
+     signedup()
+  })
+  .catch(function (error) {
+    alert("username or password wrong!")
+    console.log(error)
+  });
+})
+// register /sign up 
+document.getElementById("signupbtnModal").addEventListener("click",()=>{
+  let username=document.getElementById('usernamereg').value
+  let password=document.getElementById('passwordreg').value
+  let name=document.getElementById('namereg').value
+  let email=document.getElementById('emailreg').value
+  let image=document.getElementById('imagereg').files[0]
+
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('password', password);
+  formData.append('image', image);
+  formData.append('name', name);
+  formData.append('email', email);
+
+  axios.post('https://tarmeezacademy.com/api/v1/register',formData )
+  .then(function (response) {
+    console.log(response.data.token)
+    
+    let token=response.data.token
+    localStorage.setItem('token',token)
+    localStorage.setItem('user',JSON.stringify(response.data.user))
+
+    const modal=document.getElementById("signupModal")
+    const modalinstance=bootstrap.Modal.getInstance(modal)
+    modalinstance.hide()
+
+    showalert("signup successfully!","success")
+     signedup()
+  })
+  .catch(function (error) {
+    const modal=document.getElementById("signupModal")
+    const modalinstance=bootstrap.Modal.getInstance(modal)
+    modalinstance.hide()
+    showalert(error.response.data.message,"danger")
+  });
+})
+
+// creat new post
+document.getElementById("creatbtn").addEventListener("click",()=>{
+  let body=document.getElementById('discription').value
+  let image=document.getElementById('imagecreat').files[0]
+
+  console.log(image)
+  
+  const formData = new FormData();
+  formData.append('image', image);
+  formData.append('body', body);
+ 
+  const authToken=localStorage.getItem("token")
+  const auth={
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-Type': 'multipart/form-data', 
+  },
+}
+
+  axios.post('https://tarmeezacademy.com/api/v1/posts',formData ,auth)
+  .then(function (response) {
+    const modal=document.getElementById("creatModal")
+    const modalinstance=bootstrap.Modal.getInstance(modal)
+    modalinstance.hide()
+    getAllposts()
+
+    showalert("You shared a new post ","success")
+
+    
+  })
+  .catch(function (error) {
+    console.log(error)
+    const modal=document.getElementById("creatModal")
+    const modalinstance=bootstrap.Modal.getInstance(modal)
+    modalinstance.hide()
+    showalert(error.response.data.message,"danger")
+  });
+})
+
+// add new comment
+function addcomment(){
+  let body=document.getElementById('commentInput').value
+  
+  let bodyparams={
+    "body":body
+}
+  const authToken=localStorage.getItem("token")
+  const auth={
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+  },
+}
+
+  axios.post('https://tarmeezacademy.com/api/v1/posts/'+idNumber+'/comments',bodyparams ,auth)
+  .then(function (response) {
+    getpost()
+    document.getElementById('commentInput').value=""
+    showalert("You commented on a post","success")
+    
+    
+  })
+  .catch(function (error) {
+    console.log(error)
+    
+    showalert(error.response.data.message,"danger")
+  });
+}
+function signedup() {
+  const token=localStorage.getItem("token")
+  const loginbtn=document.getElementById("loginbtngreen")
+  const signupbtn=document.getElementById("signupbtn")
+  const logoutbtn=document.getElementById("logoutbtn")
+  const profileImage=document.getElementById("profileimage")
+  const profileUsername=document.getElementById("profilename")
+  const addCommentDiv=document.getElementById("add-comment-div")
+
+  if(token==null)
+  {
+    loginbtn.style.visibility="visible"
+    signupbtn.style.visibility="visible"
+    logoutbtn.style.visibility="hidden"
+    profileImage.style.visibility="hidden"
+    profileUsername.style.visibility="hidden"
+    addCommentDiv.style.visibility="hidden"
+
+  }
+  else{
+    loginbtn.style.visibility="hidden"
+    signupbtn.style.visibility="hidden"
+    logoutbtn.style.visibility="visible"
+    addCommentDiv.style.visibility="visible"
+
+
+    // profile photo and + button 
+    profileImage.style.visibility="visible"
+    profileUsername.style.visibility="visible"
+    const userstr=localStorage.getItem("user")
+    const userobj=JSON.parse(userstr)
+    const img=userobj.profile_image
+    const username=userobj.username
+    profileImage.src=img
+    profileUsername.innerHTML=username
+    document.getElementById("profileanchor").href="profile.html?id="+userobj.id
+
+  }
+}
+// infinite
+// const handleInfiniteScroll = () => {
+//   const endOfPage = window.innerHeight + window.pageYOffset >= document.body.scrollHeight;
+//   if (endOfPage) {
+//     console.log("true")
+//   }else{
+//     console.log("false")
+
+//   }
+// };
+
+// window.addEventListener("scroll", handleInfiniteScroll);
+
+
+
+</script>
+
+
+</html>
